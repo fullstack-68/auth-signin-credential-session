@@ -1,0 +1,29 @@
+article(style="width:100%")
+    h3 Sessions                
+    ul
+        each session in sessions 
+            li
+                div(class="session-list-wrapper")
+                    span(class="session-list-item")
+                        i(class="fa-solid fa-lg fa-computer")
+                        span=`${session.useragentStr}`
+                    span(class="session-list-item")
+                        i(class="fa-solid fa-lg fa-calendar-plus")
+                        span=`${session.createdAtStr}`
+                    if session.loginType === "CREDENTIAL"
+                        span(class="session-list-item")
+                            i(class="fa-solid fa-lg fa-key")
+                            span Credential Login
+                    else if session.loginType === "GITHUB"
+                        span(class="session-list-item")
+                            i(class="fa-brands fa-lg fa-github")
+                            span Github Login 
+                    else if session.loginType === "GOOGLE"
+                        span(class="session-list-item")
+                            i(class="fa-brands fa-lg fa-google")
+                            span Credential Login                   
+                    if !session.isOwnSession
+                        span(class="session-list-bin" hx-delete="/session" hx-vals=`{"sid":"${session.sid}"}`)
+                            i(class="fa-solid fa-lg fa-trash-can")
+                    else
+                        em (This Device)
